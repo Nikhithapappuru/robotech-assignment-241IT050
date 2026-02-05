@@ -33,7 +33,7 @@ This file documents required environment variables such as:
 - Docker Host IP
 - Jenkins credentials
 
-⚠️Where the actual secrets are not committed to the repository.
+Where the actual secrets are not committed to the repository.
 
 ---
 
