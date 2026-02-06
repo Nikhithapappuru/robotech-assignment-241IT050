@@ -48,3 +48,27 @@ Where the actual secrets are not committed to the repository.
   - Webhook-based alerting for pipeline and monitoring events
 
 ---
+### Monitoring Setup
+- Installed **Node Exporter**
+- Verified metrics exposure at `/metrics` endpoint
+- Confirmed system-level metrics such as memory, CPU, and swap usage
+
+---
+
+ How to Verify
+
+### Jenkins
+- Access Jenkins at:
+```
+http://localhost:8080
+```
+- Trigger a build manually or via GitHub push
+- Confirm successful pipeline execution in build history
+
+### Node Exporter
+- Ensure Node Exporter is running
+- Open:
+```
+http://localhost:9100/metrics
+```
+- Verify Prometheus-style metrics are visible
