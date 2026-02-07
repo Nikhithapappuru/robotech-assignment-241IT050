@@ -89,3 +89,48 @@ Prometheus and node_Exporter connection is visible at
 http://localhost:9090
 ```
 
+###Grafana Dashboard and Alerts
+
+- Grafana is installed and configured.
+- Grafana can be accessed at
+```
+http://localhost:3000
+```
+-Prometheus added as datasource and the connection is successful
+- A CPU Usage dashboard panel is created using Prometheus metrics.
+
+### Alert Rule Implementation
+- A high CPU Usage Alert is created.
+PromQl Expression used:
+```
+100 - (avg by (instance) (
+  rate(node_cpu_seconds_total{mode="idle"}[5m])
+) * 100)
+```
+ALert Condition:
+```
+IS ABOVE 1 (for testing)
+```
+Evaluation Interval is set to: 1m fires alert a minute after testing.
+Alert states testes are:
+- Normal
+- Pending
+- Firing
+### Webhook Notification Integration
+
+A webhook contact point is added from
+```
+https://webhook.site
+```
+
+Webhook Contact Point:
+Name: webhook-alerts
+Type: Webhook
+Method: POST
+
+When the alert fired, Grafana sent a POST request to webhook.site.
+- JSON payload will be received ( Notification will be received)
+
+This proves integration works from end to end.
+
+
