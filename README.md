@@ -52,6 +52,9 @@ Where the actual secrets are not committed to the repository.
 - Installed **Node Exporter**
 - Verified metrics exposure at `/metrics` endpoint
 - Confirmed system-level metrics such as memory, CPU, and swap usage
+- Node exporter is running on the port 9100
+- Prometheus runs on the port 9090
+- Prometheus scraped node_exporter metrics
 
 ---
 
@@ -62,13 +65,27 @@ Where the actual secrets are not committed to the repository.
 ```
 http://localhost:8080
 ```
+### Node Exporter
+```
+node_exporter 
+```
 - Trigger a build manually or via GitHub push
 - Confirm successful pipeline execution in build history
-
-### Node Exporter
-- Ensure Node Exporter is running
 - Open:
+
 ```
 http://localhost:9100/metrics
 ```
 - Verify Prometheus-style metrics are visible
+###Prometheus
+
+Run:
+```
+./prometheus --config.file=prometheus.yml
+```
+- Prometheus Targets page shows node_exporter as UP
+Prometheus and node_Exporter connection is visible at
+```
+http://localhost:9090
+```
+
