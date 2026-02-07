@@ -4,14 +4,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Code checkout completed'
+                echo 'Checking out code'
             }
         }
 
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies'
-                sh 'echo "Simulate dependency install"'
             }
         }
 
@@ -24,18 +23,37 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building project'
-                sh 'echo "Build successful"'
+                echo 'Building application'
+            }
+        }
+
+        stage('Simulated Deployment') {
+            steps {
+                echo 'Simulating deployment process'
+                sh 'sleep 10'
             }
         }
     }
 
     post {
-        failure {
-            echo 'Pipeline failed'
-        }
         success {
             echo 'Pipeline succeeded'
         }
+
+        failure {
+            echo 'Pipeline failed'
+            sh '''
+            curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "source": "jenkins",
+              "event": "pipeline_failed",
+              "job_name": "'"$JOB_NAME"'",
+              "build_number": "'"$BUILD_NUMBER"'"
+            }' \
+            https://webhook.site/0513a57c-4e78-472a-b7b2-0bb6f0547e5b
+            '''
+        }
     }
 }
+
